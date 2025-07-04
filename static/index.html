@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>웹 페이지 캡처 도구</title>
+    <title>웹 페이지 캡처</title>
     <style>
         * {
             margin: 0;
@@ -12,8 +12,8 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -24,106 +24,152 @@
         .container {
             background: white;
             padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            max-width: 600px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            max-width: 500px;
             width: 100%;
-            backdrop-filter: blur(10px);
         }
         
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
         
         .logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 2.5rem;
+            margin: 0 auto 15px;
+            font-size: 1.8rem;
         }
         
         h1 {
             color: #333;
-            margin-bottom: 10px;
-            font-size: 2.2rem;
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
         
         .subtitle {
             color: #666;
-            font-size: 1.1rem;
-            line-height: 1.6;
+            font-size: 14px;
         }
         
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 600;
+            font-weight: 500;
             color: #333;
-            font-size: 1rem;
+            font-size: 14px;
         }
         
-        input, select {
+        input {
             width: 100%;
-            padding: 15px 18px;
+            padding: 14px 16px;
             border: 2px solid #e1e5e9;
-            border-radius: 12px;
+            border-radius: 8px;
             font-size: 16px;
-            transition: all 0.3s ease;
+            transition: border-color 0.2s ease;
             background: #fafbfc;
         }
         
-        input:focus, select:focus {
+        input:focus {
             outline: none;
-            border-color: #4facfe;
+            border-color: #667eea;
             background: white;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+        
+        .quick-urls {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .quick-url {
+            background: #f1f3f4;
+            color: #5f6368;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .quick-url:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .format-selector {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .format-option {
+            flex: 1;
+            padding: 8px 12px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: none;
+            background: transparent;
+            color: #666;
+        }
+        
+        .format-option.active {
+            background: white;
+            color: #333;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         
         .capture-btn {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         .capture-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 35px rgba(79, 172, 254, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
         
         .capture-btn:disabled {
-            opacity: 0.6;
+            opacity: 0.7;
             cursor: not-allowed;
             transform: none;
         }
         
         .status {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 12px;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
             text-align: center;
-            font-weight: 500;
             font-size: 14px;
             display: none;
         }
@@ -141,48 +187,14 @@
         }
         
         .status.loading {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
-        }
-        
-        .features {
-            margin-top: 40px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 20px;
-        }
-        
-        .feature {
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #f8f9ff 0%, #f0f8ff 100%);
-            border-radius: 15px;
-            border: 1px solid #e8f4f8;
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            display: block;
-        }
-        
-        .feature-title {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-        
-        .feature-text {
-            font-size: 12px;
-            color: #666;
-            line-height: 1.4;
+            background: #e2e3e5;
+            color: #495057;
+            border: 1px solid #ced4da;
         }
         
         .spinner {
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             border: 2px solid #ffffff40;
             border-top: 2px solid #ffffff;
             border-radius: 50%;
@@ -194,21 +206,25 @@
             100% { transform: rotate(360deg); }
         }
         
-        .url-examples {
-            margin-top: 10px;
-            font-size: 12px;
-            color: #888;
+        .footer {
+            margin-top: 25px;
             text-align: center;
+            font-size: 12px;
+            color: #999;
         }
         
-        .url-examples a {
-            color: #4facfe;
-            text-decoration: none;
-            margin: 0 8px;
-        }
-        
-        .url-examples a:hover {
-            text-decoration: underline;
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .quick-urls {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -216,169 +232,167 @@
     <div class="container">
         <div class="header">
             <div class="logo">🌐</div>
-            <h1>웹 페이지 캡처 도구</h1>
-            <p class="subtitle">웹 페이지를 고품질 이미지나 PDF로 저장하세요<br>빠르고 간편한 원클릭 캡처!</p>
+            <h1>웹 페이지 캡처</h1>
+            <p class="subtitle">URL을 입력하고 캡처 버튼을 클릭하세요</p>
         </div>
         
         <form id="captureForm">
             <div class="form-group">
-                <label for="url">🔗 웹 페이지 URL</label>
+                <label for="url">웹 페이지 주소 (URL)</label>
                 <input 
                     type="url" 
                     id="url" 
                     placeholder="https://example.com" 
+                    value=""
                     required
                 >
-                <div class="url-examples">
-                    예시: 
-                    <a href="#" onclick="setUrl('https://google.com')">구글</a>
-                    <a href="#" onclick="setUrl('https://naver.com')">네이버</a>
-                    <a href="#" onclick="setUrl('https://github.com')">깃허브</a>
+                <div class="quick-urls">
+                    <span class="quick-url" onclick="setUrl('https://google.com')">구글</span>
+                    <span class="quick-url" onclick="setUrl('https://naver.com')">네이버</span>
+                    <span class="quick-url" onclick="setUrl('https://github.com')">깃허브</span>
+                    <span class="quick-url" onclick="setUrl('https://news.ycombinator.com')">해커뉴스</span>
                 </div>
             </div>
             
             <div class="form-group">
-                <label for="format">📁 파일 형식</label>
-                <select id="format">
-                    <option value="png">🖼️ PNG 이미지 (고품질)</option>
-                    <option value="pdf">📄 PDF 문서 (인쇄용)</option>
-                </select>
+                <label>파일 형식</label>
+                <div class="format-selector">
+                    <button type="button" class="format-option active" data-format="png" onclick="selectFormat('png')">
+                        🖼️ 이미지 (PNG)
+                    </button>
+                    <button type="button" class="format-option" data-format="pdf" onclick="selectFormat('pdf')">
+                        📄 문서 (PDF)
+                    </button>
+                </div>
             </div>
             
             <button type="submit" class="capture-btn" id="captureBtn">
-                <span id="btn-text">📸 페이지 캡처하기</span>
+                <span id="btn-text">📸 캡처하기</span>
                 <div class="spinner" id="spinner" style="display: none;"></div>
             </button>
         </form>
         
         <div id="status" class="status"></div>
         
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">🌐</div>
-                <div class="feature-title">전체 페이지 캡처</div>
-                <div class="feature-text">스크롤이 긴 페이지도 전체를 한번에 캡처</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🖼️</div>
-                <div class="feature-title">고품질 이미지</div>
-                <div class="feature-text">1920px 고해상도로 선명한 이미지 제공</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📄</div>
-                <div class="feature-title">PDF 변환</div>
-                <div class="feature-text">문서 보관용 PDF 형식으로 저장 가능</div>
-            </div>
+        <div class="footer">
+            이미지 또는 PDF 파일이 새 탭에서 열립니다
         </div>
     </div>
 
     <script>
-        const form = document.getElementById('captureForm');
-        const urlInput = document.getElementById('url');
-        const formatSelect = document.getElementById('format');
-        const captureBtn = document.getElementById('captureBtn');
-        const btnText = document.getElementById('btn-text');
-        const spinner = document.getElementById('spinner');
-        const status = document.getElementById('status');
-
+        let selectedFormat = 'png'; // 기본값: 이미지
+        
         function setUrl(url) {
-            urlInput.value = url;
+            document.getElementById('url').value = url;
             hideStatus();
         }
-
+        
+        function selectFormat(format) {
+            selectedFormat = format;
+            
+            // 모든 버튼에서 active 클래스 제거
+            document.querySelectorAll('.format-option').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // 선택된 버튼에 active 클래스 추가
+            document.querySelector(`[data-format="${format}"]`).classList.add('active');
+            
+            hideStatus();
+        }
+        
         function showStatus(message, type) {
+            const status = document.getElementById('status');
             status.textContent = message;
             status.className = `status ${type}`;
             status.style.display = 'block';
         }
-
+        
         function hideStatus() {
-            status.style.display = 'none';
+            document.getElementById('status').style.display = 'none';
         }
-
+        
         function setLoading(isLoading) {
-            captureBtn.disabled = isLoading;
-            if (isLoading) {
-                btnText.style.display = 'none';
-                spinner.style.display = 'block';
-            } else {
-                btnText.style.display = 'block';
-                spinner.style.display = 'none';
-            }
+            const btn = document.getElementById('captureBtn');
+            const btnText = document.getElementById('btn-text');
+            const spinner = document.getElementById('spinner');
+            
+            btn.disabled = isLoading;
+            btnText.style.display = isLoading ? 'none' : 'block';
+            spinner.style.display = isLoading ? 'block' : 'none';
         }
-
-        form.addEventListener('submit', async (e) => {
+        
+        document.getElementById('captureForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const url = urlInput.value.trim();
-            const format = formatSelect.value;
+            const url = document.getElementById('url').value.trim();
             
             if (!url) {
-                showStatus('❌ URL을 입력해주세요.', 'error');
+                showStatus('URL을 입력해주세요', 'error');
                 return;
             }
-
+            
+            // URL 유효성 검사 및 보정
+            let validUrl = url;
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                validUrl = 'https://' + url;
+            }
+            
             setLoading(true);
-            showStatus('🔄 웹 페이지를 캡처하고 있습니다... 잠시만 기다려주세요.', 'loading');
-
+            showStatus('웹 페이지를 캡처하고 있습니다...', 'loading');
+            
             try {
-                const response = await fetch('/api/capture', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        url: url,
-                        format: format
-                    })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || '캡처에 실패했습니다.');
+                let apiUrl, filename;
+                
+                if (selectedFormat === 'png') {
+                    // PNG 이미지 캡처
+                    apiUrl = `https://api.screenshotone.com/take?access_key=YWNjZXNzX2tleQ&url=${encodeURIComponent(validUrl)}&format=png&full_page=true&viewport_width=1200&viewport_height=800`;
+                    filename = `capture_${new Date().getTime()}.png`;
+                } else {
+                    // PDF 문서 캡처
+                    apiUrl = `https://api.screenshotone.com/take?access_key=YWNjZXNzX2tleQ&url=${encodeURIComponent(validUrl)}&format=pdf&full_page=true&viewport_width=1200&viewport_height=800&pdf_format=A4`;
+                    filename = `capture_${new Date().getTime()}.pdf`;
                 }
-
-                showStatus('📥 파일을 다운로드하고 있습니다...', 'loading');
                 
-                // 파일 다운로드
-                const blob = await response.blob();
-                const downloadUrl = window.URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = downloadUrl;
+                // 새 탭에서 열기
+                const newWindow = window.open(apiUrl, '_blank');
                 
-                // 파일명 생성
-                const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
-                const extension = format === 'pdf' ? 'pdf' : 'png';
-                const domain = new URL(url).hostname.replace(/[^a-zA-Z0-9]/g, '_');
-                link.download = `${domain}_capture_${timestamp}.${extension}`;
+                if (newWindow) {
+                    const formatText = selectedFormat === 'png' ? '이미지' : 'PDF 문서';
+                    showStatus(`${formatText} 캡처 완료! 새 탭에서 파일을 확인하세요`, 'success');
+                    
+                    // 자동 다운로드 시도
+                    setTimeout(() => {
+                        const link = document.createElement('a');
+                        link.href = apiUrl;
+                        link.download = filename;
+                        link.target = '_blank';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    }, 1500);
+                } else {
+                    showStatus('팝업이 차단되었습니다. 브라우저에서 팝업을 허용해주세요', 'error');
+                }
                 
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                window.URL.revokeObjectURL(downloadUrl);
-
-                showStatus('🎉 캡처가 완료되었습니다! 파일이 다운로드되었어요.', 'success');
-                setTimeout(hideStatus, 5000);
-
             } catch (error) {
-                showStatus(`❌ 오류가 발생했습니다: ${error.message}`, 'error');
+                showStatus('캡처 중 오류가 발생했습니다', 'error');
             } finally {
                 setLoading(false);
             }
         });
-
+        
         // URL 입력시 에러 메시지 숨기기
-        urlInput.addEventListener('input', () => {
-            if (status.classList.contains('error')) {
+        document.getElementById('url').addEventListener('input', () => {
+            if (document.getElementById('status').classList.contains('error')) {
                 hideStatus();
             }
         });
-
-        // 페이지 로드시 환영 메시지
-        setTimeout(() => {
-            showStatus('👋 웹 페이지 캡처 도구에 오신 걸 환영합니다!', 'success');
-            setTimeout(hideStatus, 3000);
-        }, 500);
+        
+        // 페이지 로드시 URL 입력창에 포커스
+        window.addEventListener('load', () => {
+            document.getElementById('url').focus();
+        });
     </script>
 </body>
 </html>
